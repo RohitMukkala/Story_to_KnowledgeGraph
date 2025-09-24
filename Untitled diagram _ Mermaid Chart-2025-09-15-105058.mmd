@@ -1,0 +1,83 @@
+flowchart TD
+    %% Inputs and environment
+    A["Input Story Text"]:::data --> B["Coreference Resolution<br/>AllenNLP SpanBERT<br/>path: C:/Users/__msi__/coref-spanbert-large"]:::op
+
+    subgraph S1 ["Stage 1: Linguistic preprocessing (spaCy)"]
+        direction TB
+        B --> C["preprocess_story(text, nlp)<br/>spaCy: en_core_web_lg"]:::op
+        C --> D1["Sentences (Doc.sents)"]:::data
+        C --> D2["Tokens / POS / Deps"]:::data
+        C --> D3["Per-sentence dependencies"]:::data
+    end
+
+    subgraph S2 ["Stage 2: Scene annotation"]
+        direction TB
+        D1 --> E["get_sentence_subject(deps)"]:::op
+        E --> F["annotate_scenes(stage1)<br/>Rule: start=b, same-subject=i"]:::op
+        F --> G["stage2_output:<br/>['b scene ...','i scene ...']"]:::data
+        D1 --> H["convert_stage2_to_stage3(stage1, stage2)"]:::op
+        H --> I["stage3_ready_input:<br/>{scene_id, text, tokens, pos, deps}"]:::data
+    end
+
+    subgraph S3 ["Stage 3: Deep context extraction"]
+        direction TB
+        subgraph M ["Models loaded once"]
+            M1["AllenNLP coref_predictor"]:::model
+            M2["HF NER model<br/>path: C:/Users/__msi__/dslim/bert-base-NER"]:::model
+            M3["HF emotion_classifier<br/>path: C:/Users/__msi__/SamLowe/roberta-base-go_emotions"]:::model
+            M4["spaCy en_core_web_sm"]:::model
+            M5["AllenNLP SRL predictor<br/>structured-prediction-srl-bert.tar.gz"]:::model
+        end
+
+        I --> J["analyze_story_for_deep_context(scenes)"]:::op
+        J --> J1["extract_entities_solved<br/>NER + noun_chunks + merge rules"]:::op
+        J --> J2["extract_attributes_improved<br/>deps → head-children maps, modifiers"]:::op
+        J --> J3["SRL parsing<br/>→ events mapped to schema roles"]:::op
+        J --> J4["emotion_classifier(text) top_k=1"]:::op
+        J --> K["deep_context:<br/>per scene {entities, attributes, emotions, events}"]:::data
+
+        subgraph ES ["Event schema"]
+            ES1["event_mapping:<br/>Conflict, Journey, Transaction, Communication, Perception, ..."]:::data
+        end
+    end
+
+    subgraph S4 ["Stage 4: Summarization"]
+        direction TB
+        D1 --> L["join(Stage 1 sentences)"]:::op
+        L --> M_summarizer["BART Summarizer<br/>facebook-bart-large-cnn"]:::model
+        M_summarizer --> N["HF summarization pipeline<br/>max_len=60, min_len=15"]:::op
+        N --> O["summary_output:<br/>{original_text, summary}"]:::data
+    end
+
+    subgraph COMB ["Combine outputs"]
+        direction TB
+        G --> P["build_final_structure<br/>{stage2_output, deep_context, summary}"]:::op
+        K --> P
+        O --> P
+        P --> Q["final_data:<br/>{stage2_scenes, stage3_details, summary}"]:::data
+    end
+
+    subgraph KG ["Neo4j Load (RobustKnowledgeGraphLoader)"]
+        direction TB
+        R["ensure_schema()<br/>Constraints: Story, Entity, Scene, Event"]:::op
+        S["clear_story(story_id) optional"]:::op
+        T["MERGE Story<br/>{story_id, title, summary, original_text}"]:::op
+        U["For each Scene"]:::op
+        V["MERGE Scene<br/>{scene_uid, scene_id, type, text}"]:::op
+        W["Ensure Entities<br/>canonical normalize_text"]:::op
+        X["MERGE Event<br/>{event_id, trigger, method, type}"]:::op
+        Y["Link PARTICIPATED_IN(role)<br/>arg_text → entity"]:::op
+        Z["MERGE Attribute<br/>HAS_ATTRIBUTE"]:::op
+        Z2["MERGE Emotion<br/>HAS_EMOTION {score}"]:::op
+
+        Q --> R --> S --> T --> U
+        U --> V --> W --> X --> Y --> Z --> Z2
+    end
+
+    %% Connections between major stages
+    S1 --> S4
+
+    %% CSS Classes for styling
+    classDef op fill:#eef,stroke:#669,stroke-width:1px;
+    classDef data fill:#efe,stroke:#484,stroke-width:1px;
+    classDef model fill:#fee,stroke:#944,stroke-width:1px;

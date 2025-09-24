@@ -1,0 +1,137 @@
+---
+config:
+  layout: elk
+---
+flowchart TD
+ subgraph S1["Stage 1: Linguistic preprocessing (spaCy)"]
+    direction TB
+        C["preprocess_story(text, nlp)<br>spaCy: en_core_web_lg"]
+        B["Coreference Resolution<br>AllenNLP SpanBERT<br>path: C:/Users/__msi__/coref-spanbert-large"]
+        D1["Sentences (Doc.sents)"]
+        D2["Tokens / POS / Deps"]
+        D3["Per-sentence dependencies"]
+  end
+ subgraph S2["Stage 2: Scene annotation"]
+    direction TB
+        E["get_sentence_subject(deps)"]
+        F["annotate_scenes(stage1)<br>Rule: start=b, same-subject=i"]
+        G@{ label: "stage2_output:<br>['b scene ...','i scene ...']" }
+        H["convert_stage2_to_stage3(stage1, stage2)"]
+        I["stage3_ready_input:<br>{scene_id, text, tokens, pos, deps}"]
+  end
+ subgraph M["Models loaded once"]
+        M1["AllenNLP coref_predictor"]
+        M2["HF NER model<br>path: C:/Users/__msi__/dslim/bert-base-NER"]
+        M3["HF emotion_classifier<br>path: C:/Users/__msi__/SamLowe/roberta-base-go_emotions"]
+        M4["spaCy en_core_web_sm"]
+        M5["AllenNLP SRL predictor<br>structured-prediction-srl-bert.tar.gz"]
+  end
+ subgraph ES["Event schema"]
+        ES1["event_mapping:<br>Conflict, Journey, Transaction, Communication, Perception, ..."]
+  end
+ subgraph S3["Stage 3: Deep context extraction"]
+    direction TB
+        M
+        J["analyze_story_for_deep_context(scenes)"]
+        J1["extract_entities_solved<br>NER + noun_chunks + merge rules"]
+        J2["extract_attributes_improved<br>deps → head-children maps, modifiers"]
+        J3["SRL parsing<br>→ events mapped to schema roles"]
+        J4["emotion_classifier(text) top_k=1"]
+        K["deep_context:<br>per scene {entities, attributes, emotions, events}"]
+        ES
+  end
+ subgraph S4["Stage 4: Summarization"]
+    direction TB
+        L["join(Stage 1 sentences)"]
+        M_summarizer["BART Summarizer<br>facebook-bart-large-cnn"]
+        N["HF summarization pipeline<br>max_len=60, min_len=15"]
+        O["summary_output:<br>{original_text, summary}"]
+  end
+ subgraph COMB["Combine outputs"]
+    direction TB
+        P["build_final_structure<br>{stage2_output, deep_context, summary}"]
+        Q["final_data:<br>{stage2_scenes, stage3_details, summary}"]
+  end
+ subgraph KG["Neo4j Load (RobustKnowledgeGraphLoader)"]
+    direction TB
+        R["ensure_schema()<br>Constraints: Story, Entity, Scene, Event"]
+        S["clear_story(story_id) optional"]
+        T["MERGE Story<br>{story_id, title, summary, original_text}"]
+        U["For each Scene"]
+        V["MERGE Scene<br>{scene_uid, scene_id, type, text}"]
+        W["Ensure Entities<br>canonical normalize_text"]
+        X["MERGE Event<br>{event_id, trigger, method, type}"]
+        Y["Link PARTICIPATED_IN(role)<br>arg_text → entity"]
+        Z["MERGE Attribute<br>HAS_ATTRIBUTE"]
+        Z2["MERGE Emotion<br>HAS_EMOTION {score}"]
+  end
+    A["Input Story Text"] --> B
+    B --> C
+    C --> D1 & D2 & D3
+    D1 --> E & H & L
+    E --> F
+    F --> G
+    H --> I
+    I --> J
+    J --> J1 & J2 & J3 & J4 & K
+    L --> M_summarizer
+    M_summarizer --> N
+    N --> O
+    G --> P
+    K --> P
+    O --> P
+    P --> Q
+    Q --> R
+    R --> S
+    S --> T
+    T --> U
+    U --> V
+    V --> W
+    W --> X
+    X --> Y
+    Y --> Z
+    Z --> Z2
+    S1 --> S4
+    G@{ shape: rect}
+     A:::data
+     B:::op
+     C:::op
+     D1:::data
+     D2:::data
+     D3:::data
+     E:::op
+     F:::op
+     G:::data
+     H:::op
+     I:::data
+     M1:::model
+     M2:::model
+     M3:::model
+     M4:::model
+     M5:::model
+     J:::op
+     J1:::op
+     J2:::op
+     J3:::op
+     J4:::op
+     K:::data
+     ES1:::data
+     L:::op
+     M_summarizer:::model
+     N:::op
+     O:::data
+     P:::op
+     Q:::data
+     R:::op
+     S:::op
+     T:::op
+     U:::op
+     V:::op
+     W:::op
+     X:::op
+     Y:::op
+     Z:::op
+     Z2:::op
+    classDef op fill:#eef,stroke:#669,stroke-width:1px
+    classDef data fill:#efe,stroke:#484,stroke-width:1px
+    classDef model fill:#fee,stroke:#944,stroke-width:1px
