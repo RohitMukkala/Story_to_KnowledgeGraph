@@ -20,10 +20,7 @@ import re
 nlp = spacy.load("en_core_web_lg")
 
 story_text = """
-Hare was hopping through the forest.  
-He saw a tortoise slowly walking along the path.
-he greeted him fast.
-he is handsome.
+Once, a hare laughed at a tortoise for being slow. Feeling insulted, the tortoise challenged the hare to a race. At the start, the hare ran quickly and left the tortoise far behind, but he soon grew overconfident and decided to rest. While the hare slept, the tortoise kept moving steadily and, in the end, crossed the finish line first, winning the race.
 """
 
 def preprocess_story(text, nlp_model):
@@ -52,11 +49,7 @@ output = preprocess_story(story_text, nlp)
 print(output)
 ```
 
-    C:\Users\__msi__\anaconda3\envs\story2kg_env\lib\site-packages\tqdm\auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
-      from .autonotebook import tqdm as notebook_tqdm
-    
-
-    {'sentences': [Hare was hopping through the forest., He saw a tortoise slowly walking along the path., he greeted him fast., he is handsome.], 'words': [['Hare', 'was', 'hopping', 'through', 'the', 'forest', '.'], ['He', 'saw', 'a', 'tortoise', 'slowly', 'walking', 'along', 'the', 'path', '.'], ['he', 'greeted', 'him', 'fast', '.'], ['he', 'is', 'handsome', '.']], 'pos_tags': [[('Hare', 'PROPN'), ('was', 'AUX'), ('hopping', 'VERB'), ('through', 'ADP'), ('the', 'DET'), ('forest', 'NOUN'), ('.', 'PUNCT')], [('He', 'PRON'), ('saw', 'VERB'), ('a', 'DET'), ('tortoise', 'NOUN'), ('slowly', 'ADV'), ('walking', 'VERB'), ('along', 'ADP'), ('the', 'DET'), ('path', 'NOUN'), ('.', 'PUNCT')], [('he', 'PRON'), ('greeted', 'VERB'), ('him', 'PRON'), ('fast', 'ADV'), ('.', 'PUNCT')], [('he', 'PRON'), ('is', 'AUX'), ('handsome', 'ADJ'), ('.', 'PUNCT')]], 'dependencies': [[('Hare', 'nsubj', 'hopping'), ('was', 'aux', 'hopping'), ('hopping', 'ROOT', 'hopping'), ('through', 'prep', 'hopping'), ('the', 'det', 'forest'), ('forest', 'pobj', 'through'), ('.', 'punct', 'hopping')], [('He', 'nsubj', 'saw'), ('saw', 'ROOT', 'saw'), ('a', 'det', 'tortoise'), ('tortoise', 'nsubj', 'walking'), ('slowly', 'advmod', 'walking'), ('walking', 'ccomp', 'saw'), ('along', 'prep', 'walking'), ('the', 'det', 'path'), ('path', 'pobj', 'along'), ('.', 'punct', 'saw')], [('he', 'nsubj', 'greeted'), ('greeted', 'ROOT', 'greeted'), ('him', 'dobj', 'greeted'), ('fast', 'advmod', 'greeted'), ('.', 'punct', 'greeted')], [('he', 'nsubj', 'is'), ('is', 'ROOT', 'is'), ('handsome', 'acomp', 'is'), ('.', 'punct', 'is')]]}
+    {'sentences': [Once, a hare laughed at a tortoise for being slow., Feeling insulted, the tortoise challenged the hare to a race., At the start, the hare ran quickly and left the tortoise far behind, but he soon grew overconfident and decided to rest., While the hare slept, the tortoise kept moving steadily and, in the end, crossed the finish line first, winning the race.], 'words': [['Once', ',', 'a', 'hare', 'laughed', 'at', 'a', 'tortoise', 'for', 'being', 'slow', '.'], ['Feeling', 'insulted', ',', 'the', 'tortoise', 'challenged', 'the', 'hare', 'to', 'a', 'race', '.'], ['At', 'the', 'start', ',', 'the', 'hare', 'ran', 'quickly', 'and', 'left', 'the', 'tortoise', 'far', 'behind', ',', 'but', 'he', 'soon', 'grew', 'overconfident', 'and', 'decided', 'to', 'rest', '.'], ['While', 'the', 'hare', 'slept', ',', 'the', 'tortoise', 'kept', 'moving', 'steadily', 'and', ',', 'in', 'the', 'end', ',', 'crossed', 'the', 'finish', 'line', 'first', ',', 'winning', 'the', 'race', '.']], 'pos_tags': [[('Once', 'ADV'), (',', 'PUNCT'), ('a', 'DET'), ('hare', 'NOUN'), ('laughed', 'VERB'), ('at', 'ADP'), ('a', 'DET'), ('tortoise', 'NOUN'), ('for', 'ADP'), ('being', 'AUX'), ('slow', 'ADJ'), ('.', 'PUNCT')], [('Feeling', 'AUX'), ('insulted', 'VERB'), (',', 'PUNCT'), ('the', 'DET'), ('tortoise', 'NOUN'), ('challenged', 'VERB'), ('the', 'DET'), ('hare', 'NOUN'), ('to', 'ADP'), ('a', 'DET'), ('race', 'NOUN'), ('.', 'PUNCT')], [('At', 'ADP'), ('the', 'DET'), ('start', 'NOUN'), (',', 'PUNCT'), ('the', 'DET'), ('hare', 'NOUN'), ('ran', 'VERB'), ('quickly', 'ADV'), ('and', 'CCONJ'), ('left', 'VERB'), ('the', 'DET'), ('tortoise', 'NOUN'), ('far', 'ADV'), ('behind', 'ADV'), (',', 'PUNCT'), ('but', 'CCONJ'), ('he', 'PRON'), ('soon', 'ADV'), ('grew', 'VERB'), ('overconfident', 'ADJ'), ('and', 'CCONJ'), ('decided', 'VERB'), ('to', 'PART'), ('rest', 'VERB'), ('.', 'PUNCT')], [('While', 'SCONJ'), ('the', 'DET'), ('hare', 'NOUN'), ('slept', 'VERB'), (',', 'PUNCT'), ('the', 'DET'), ('tortoise', 'NOUN'), ('kept', 'VERB'), ('moving', 'VERB'), ('steadily', 'ADV'), ('and', 'CCONJ'), (',', 'PUNCT'), ('in', 'ADP'), ('the', 'DET'), ('end', 'NOUN'), (',', 'PUNCT'), ('crossed', 'VERB'), ('the', 'DET'), ('finish', 'NOUN'), ('line', 'NOUN'), ('first', 'ADV'), (',', 'PUNCT'), ('winning', 'VERB'), ('the', 'DET'), ('race', 'NOUN'), ('.', 'PUNCT')]], 'dependencies': [[('Once', 'advmod', 'laughed'), (',', 'punct', 'laughed'), ('a', 'det', 'hare'), ('hare', 'nsubj', 'laughed'), ('laughed', 'ROOT', 'laughed'), ('at', 'prep', 'laughed'), ('a', 'det', 'tortoise'), ('tortoise', 'pobj', 'at'), ('for', 'prep', 'laughed'), ('being', 'pcomp', 'for'), ('slow', 'acomp', 'being'), ('.', 'punct', 'laughed')], [('Feeling', 'auxpass', 'insulted'), ('insulted', 'advcl', 'challenged'), (',', 'punct', 'challenged'), ('the', 'det', 'tortoise'), ('tortoise', 'nsubj', 'challenged'), ('challenged', 'ROOT', 'challenged'), ('the', 'det', 'hare'), ('hare', 'dobj', 'challenged'), ('to', 'prep', 'challenged'), ('a', 'det', 'race'), ('race', 'pobj', 'to'), ('.', 'punct', 'challenged')], [('At', 'prep', 'ran'), ('the', 'det', 'start'), ('start', 'pobj', 'At'), (',', 'punct', 'ran'), ('the', 'det', 'hare'), ('hare', 'nsubj', 'ran'), ('ran', 'ROOT', 'ran'), ('quickly', 'advmod', 'ran'), ('and', 'cc', 'ran'), ('left', 'conj', 'ran'), ('the', 'det', 'tortoise'), ('tortoise', 'dobj', 'left'), ('far', 'advmod', 'behind'), ('behind', 'advmod', 'left'), (',', 'punct', 'ran'), ('but', 'cc', 'ran'), ('he', 'nsubj', 'grew'), ('soon', 'advmod', 'grew'), ('grew', 'conj', 'ran'), ('overconfident', 'acomp', 'grew'), ('and', 'cc', 'grew'), ('decided', 'conj', 'grew'), ('to', 'aux', 'rest'), ('rest', 'xcomp', 'decided'), ('.', 'punct', 'grew')], [('While', 'mark', 'slept'), ('the', 'det', 'hare'), ('hare', 'nsubj', 'slept'), ('slept', 'advcl', 'kept'), (',', 'punct', 'kept'), ('the', 'det', 'tortoise'), ('tortoise', 'nsubj', 'kept'), ('kept', 'ROOT', 'kept'), ('moving', 'xcomp', 'kept'), ('steadily', 'advmod', 'moving'), ('and', 'cc', 'moving'), (',', 'punct', 'crossed'), ('in', 'prep', 'crossed'), ('the', 'det', 'end'), ('end', 'pobj', 'in'), (',', 'punct', 'crossed'), ('crossed', 'conj', 'kept'), ('the', 'det', 'line'), ('finish', 'compound', 'line'), ('line', 'dobj', 'crossed'), ('first', 'advmod', 'crossed'), (',', 'punct', 'crossed'), ('winning', 'advcl', 'crossed'), ('the', 'det', 'race'), ('race', 'dobj', 'winning'), ('.', 'punct', 'crossed')]]}
     
 
 # Stage 2
@@ -205,25 +198,20 @@ if __name__ == "__main__":
     
 
     error loading _jsonnet (this is expected on Windows), treating C:\Users\__msi__\coref-spanbert-large\config.json as plain json
-    Some weights of BertModel were not initialized from the model checkpoint at C:/Users/__msi__/spanbert-large-cased and are newly initialized: ['bert.pooler.dense.weight', 'bert.pooler.dense.bias']
-    You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
     
 
     Resolved Text:
      
-     Hare was hopping through the forest .  
-     Hare saw a tortoise slowly walking along the path . 
-     Hare greeted a tortoise fast . 
-     a tortoise is handsome . 
+     Once , a hare laughed at a tortoise for being slow . Feeling insulted , a tortoise challenged a hare to a race . At the start , a hare ran quickly and left a tortoise far behind , but a hare soon grew overconfident and decided to rest . While a hare slept , a tortoise kept moving steadily and , in the end , crossed the finish line first , winning a race . 
     
     ----------------------------------------
     --- Running Stage 1 ---
     Stage 1 Sentences:
-     ['Hare was hopping through the forest .', 'Hare saw a tortoise slowly walking along the path .', 'Hare greeted a tortoise fast .', 'a tortoise is handsome .']
+     ['Once , a hare laughed at a tortoise for being slow .', 'Feeling insulted , a tortoise challenged a hare to a race .', 'At the start , a hare ran quickly and left a tortoise far behind , but a hare soon grew overconfident and decided to rest .', 'While a hare slept , a tortoise kept moving steadily and , in the end , crossed the finish line first , winning a race .']
     ----------------------------------------
     --- Running Stage 2 ---
     Final Stage 2 Output:
-     ['b scene [Hare was hopping through the forest .]', 'i scene [Hare saw a tortoise slowly walking along the path .]', 'i scene [Hare greeted a tortoise fast .]', 'b scene [a tortoise is handsome .]']
+     ['b scene [Once , a hare laughed at a tortoise for being slow .]', 'b scene [Feeling insulted , a tortoise challenged a hare to a race .]', 'b scene [At the start , a hare ran quickly and left a tortoise far behind , but a hare soon grew overconfident and decided to rest .]', 'i scene [While a hare slept , a tortoise kept moving steadily and , in the end , crossed the finish line first , winning a race .]']
     
 
 
@@ -264,85 +252,124 @@ print(json.dumps(stage3_ready_input, indent=2))
     [
       {
         "scene_id": 1,
-        "text": "Hare was hopping through the forest .",
+        "text": "Once , a hare laughed at a tortoise for being slow .",
         "tokens": [
-          "Hare",
-          "was",
-          "hopping",
-          "through",
-          "the",
-          "forest",
+          "Once",
+          ",",
+          "a",
+          "hare",
+          "laughed",
+          "at",
+          "a",
+          "tortoise",
+          "for",
+          "being",
+          "slow",
           "."
         ],
         "pos": [
-          "PROPN",
-          "AUX",
+          "ADV",
+          "PUNCT",
+          "DET",
+          "NOUN",
           "VERB",
           "ADP",
           "DET",
           "NOUN",
+          "ADP",
+          "AUX",
+          "ADJ",
           "PUNCT"
         ],
         "dependencies": [
           [
-            "Hare",
-            "nsubj",
-            "hopping"
+            "Once",
+            "advmod",
+            "laughed"
           ],
           [
-            "was",
-            "aux",
-            "hopping"
+            ",",
+            "punct",
+            "laughed"
           ],
           [
-            "hopping",
-            "ROOT",
-            "hopping"
-          ],
-          [
-            "through",
-            "prep",
-            "hopping"
-          ],
-          [
-            "the",
+            "a",
             "det",
-            "forest"
+            "hare"
           ],
           [
-            "forest",
+            "hare",
+            "nsubj",
+            "laughed"
+          ],
+          [
+            "laughed",
+            "ROOT",
+            "laughed"
+          ],
+          [
+            "at",
+            "prep",
+            "laughed"
+          ],
+          [
+            "a",
+            "det",
+            "tortoise"
+          ],
+          [
+            "tortoise",
             "pobj",
-            "through"
+            "at"
+          ],
+          [
+            "for",
+            "prep",
+            "laughed"
+          ],
+          [
+            "being",
+            "pcomp",
+            "for"
+          ],
+          [
+            "slow",
+            "acomp",
+            "being"
           ],
           [
             ".",
             "punct",
-            "hopping"
+            "laughed"
           ]
         ]
       },
       {
         "scene_id": 2,
-        "text": "Hare saw a tortoise slowly walking along the path .",
+        "text": "Feeling insulted , a tortoise challenged a hare to a race .",
         "tokens": [
-          "Hare",
-          "saw",
+          "Feeling",
+          "insulted",
+          ",",
           "a",
           "tortoise",
-          "slowly",
-          "walking",
-          "along",
-          "the",
-          "path",
+          "challenged",
+          "a",
+          "hare",
+          "to",
+          "a",
+          "race",
           "."
         ],
         "pos": [
-          "PROPN",
+          "AUX",
+          "VERB",
+          "PUNCT",
+          "DET",
+          "NOUN",
           "VERB",
           "DET",
           "NOUN",
-          "ADV",
-          "VERB",
           "ADP",
           "DET",
           "NOUN",
@@ -350,14 +377,19 @@ print(json.dumps(stage3_ready_input, indent=2))
         ],
         "dependencies": [
           [
-            "Hare",
-            "nsubj",
-            "saw"
+            "Feeling",
+            "auxpass",
+            "insulted"
           ],
           [
-            "saw",
-            "ROOT",
-            "saw"
+            "insulted",
+            "advcl",
+            "challenged"
+          ],
+          [
+            ",",
+            "punct",
+            "challenged"
           ],
           [
             "a",
@@ -367,69 +399,154 @@ print(json.dumps(stage3_ready_input, indent=2))
           [
             "tortoise",
             "nsubj",
-            "walking"
+            "challenged"
           ],
           [
-            "slowly",
-            "advmod",
-            "walking"
+            "challenged",
+            "ROOT",
+            "challenged"
           ],
           [
-            "walking",
-            "ccomp",
-            "saw"
-          ],
-          [
-            "along",
-            "prep",
-            "walking"
-          ],
-          [
-            "the",
+            "a",
             "det",
-            "path"
+            "hare"
           ],
           [
-            "path",
+            "hare",
+            "dobj",
+            "challenged"
+          ],
+          [
+            "to",
+            "prep",
+            "challenged"
+          ],
+          [
+            "a",
+            "det",
+            "race"
+          ],
+          [
+            "race",
             "pobj",
-            "along"
+            "to"
           ],
           [
             ".",
             "punct",
-            "saw"
+            "challenged"
           ]
         ]
       },
       {
         "scene_id": 3,
-        "text": "Hare greeted a tortoise fast .",
+        "text": "At the start , a hare ran quickly and left a tortoise far behind , but a hare soon grew overconfident and decided to rest .",
         "tokens": [
-          "Hare",
-          "greeted",
+          "At",
+          "the",
+          "start",
+          ",",
+          "a",
+          "hare",
+          "ran",
+          "quickly",
+          "and",
+          "left",
           "a",
           "tortoise",
-          "fast",
+          "far",
+          "behind",
+          ",",
+          "but",
+          "a",
+          "hare",
+          "soon",
+          "grew",
+          "overconfident",
+          "and",
+          "decided",
+          "to",
+          "rest",
           "."
         ],
         "pos": [
-          "PROPN",
+          "ADP",
+          "DET",
+          "NOUN",
+          "PUNCT",
+          "DET",
+          "NOUN",
+          "VERB",
+          "ADV",
+          "CCONJ",
           "VERB",
           "DET",
           "NOUN",
           "ADV",
+          "ADV",
+          "PUNCT",
+          "CCONJ",
+          "DET",
+          "NOUN",
+          "ADV",
+          "VERB",
+          "ADJ",
+          "CCONJ",
+          "VERB",
+          "PART",
+          "VERB",
           "PUNCT"
         ],
         "dependencies": [
           [
-            "Hare",
-            "nsubj",
-            "greeted"
+            "At",
+            "prep",
+            "ran"
           ],
           [
-            "greeted",
+            "the",
+            "det",
+            "start"
+          ],
+          [
+            "start",
+            "pobj",
+            "At"
+          ],
+          [
+            ",",
+            "punct",
+            "ran"
+          ],
+          [
+            "a",
+            "det",
+            "hare"
+          ],
+          [
+            "hare",
+            "nsubj",
+            "ran"
+          ],
+          [
+            "ran",
             "ROOT",
-            "greeted"
+            "ran"
+          ],
+          [
+            "quickly",
+            "advmod",
+            "ran"
+          ],
+          [
+            "and",
+            "cc",
+            "ran"
+          ],
+          [
+            "left",
+            "conj",
+            "ran"
           ],
           [
             "a",
@@ -439,38 +556,165 @@ print(json.dumps(stage3_ready_input, indent=2))
           [
             "tortoise",
             "dobj",
-            "greeted"
+            "left"
           ],
           [
-            "fast",
+            "far",
             "advmod",
-            "greeted"
+            "behind"
+          ],
+          [
+            "behind",
+            "advmod",
+            "left"
+          ],
+          [
+            ",",
+            "punct",
+            "ran"
+          ],
+          [
+            "but",
+            "cc",
+            "ran"
+          ],
+          [
+            "a",
+            "det",
+            "hare"
+          ],
+          [
+            "hare",
+            "nsubj",
+            "grew"
+          ],
+          [
+            "soon",
+            "advmod",
+            "grew"
+          ],
+          [
+            "grew",
+            "conj",
+            "ran"
+          ],
+          [
+            "overconfident",
+            "acomp",
+            "grew"
+          ],
+          [
+            "and",
+            "cc",
+            "grew"
+          ],
+          [
+            "decided",
+            "conj",
+            "grew"
+          ],
+          [
+            "to",
+            "aux",
+            "rest"
+          ],
+          [
+            "rest",
+            "xcomp",
+            "decided"
           ],
           [
             ".",
             "punct",
-            "greeted"
+            "grew"
           ]
         ]
       },
       {
         "scene_id": 4,
-        "text": "a tortoise is handsome .",
+        "text": "While a hare slept , a tortoise kept moving steadily and , in the end , crossed the finish line first , winning a race .",
         "tokens": [
+          "While",
+          "a",
+          "hare",
+          "slept",
+          ",",
           "a",
           "tortoise",
-          "is",
-          "handsome",
+          "kept",
+          "moving",
+          "steadily",
+          "and",
+          ",",
+          "in",
+          "the",
+          "end",
+          ",",
+          "crossed",
+          "the",
+          "finish",
+          "line",
+          "first",
+          ",",
+          "winning",
+          "a",
+          "race",
           "."
         ],
         "pos": [
+          "SCONJ",
           "DET",
           "NOUN",
-          "AUX",
-          "ADJ",
+          "VERB",
+          "PUNCT",
+          "DET",
+          "NOUN",
+          "VERB",
+          "VERB",
+          "ADV",
+          "CCONJ",
+          "PUNCT",
+          "ADP",
+          "DET",
+          "NOUN",
+          "PUNCT",
+          "VERB",
+          "DET",
+          "NOUN",
+          "NOUN",
+          "ADV",
+          "PUNCT",
+          "VERB",
+          "DET",
+          "NOUN",
           "PUNCT"
         ],
         "dependencies": [
+          [
+            "While",
+            "mark",
+            "slept"
+          ],
+          [
+            "a",
+            "det",
+            "hare"
+          ],
+          [
+            "hare",
+            "nsubj",
+            "slept"
+          ],
+          [
+            "slept",
+            "advcl",
+            "kept"
+          ],
+          [
+            ",",
+            "punct",
+            "kept"
+          ],
           [
             "a",
             "det",
@@ -479,22 +723,102 @@ print(json.dumps(stage3_ready_input, indent=2))
           [
             "tortoise",
             "nsubj",
-            "is"
+            "kept"
           ],
           [
-            "is",
+            "kept",
             "ROOT",
-            "is"
+            "kept"
           ],
           [
-            "handsome",
-            "acomp",
-            "is"
+            "moving",
+            "xcomp",
+            "kept"
+          ],
+          [
+            "steadily",
+            "advmod",
+            "moving"
+          ],
+          [
+            "and",
+            "cc",
+            "moving"
+          ],
+          [
+            ",",
+            "punct",
+            "crossed"
+          ],
+          [
+            "in",
+            "prep",
+            "crossed"
+          ],
+          [
+            "the",
+            "det",
+            "end"
+          ],
+          [
+            "end",
+            "pobj",
+            "in"
+          ],
+          [
+            ",",
+            "punct",
+            "crossed"
+          ],
+          [
+            "crossed",
+            "conj",
+            "kept"
+          ],
+          [
+            "the",
+            "det",
+            "line"
+          ],
+          [
+            "finish",
+            "compound",
+            "line"
+          ],
+          [
+            "line",
+            "dobj",
+            "crossed"
+          ],
+          [
+            "first",
+            "advmod",
+            "crossed"
+          ],
+          [
+            ",",
+            "punct",
+            "crossed"
+          ],
+          [
+            "winning",
+            "advcl",
+            "crossed"
+          ],
+          [
+            "a",
+            "det",
+            "race"
+          ],
+          [
+            "race",
+            "dobj",
+            "winning"
           ],
           [
             ".",
             "punct",
-            "is"
+            "crossed"
           ]
         ]
       }
@@ -535,8 +859,8 @@ print("Models loaded.")
     
 
     error loading _jsonnet (this is expected on Windows), treating C:\Users\__msi__\coref-spanbert-large\config.json as plain json
-    error loading _jsonnet (this is expected on Windows), treating C:\Users\__msi__\AppData\Local\Temp\tmpg_qnvosh\config.json as plain json
-    Some weights of the model checkpoint at bert-base-uncased were not used when initializing BertModel: ['cls.seq_relationship.bias', 'cls.predictions.transform.dense.bias', 'cls.predictions.transform.LayerNorm.weight', 'cls.predictions.bias', 'cls.seq_relationship.weight', 'cls.predictions.transform.dense.weight', 'cls.predictions.transform.LayerNorm.bias', 'cls.predictions.decoder.weight']
+    error loading _jsonnet (this is expected on Windows), treating C:\Users\__msi__\AppData\Local\Temp\tmpfya2wp_1\config.json as plain json
+    Some weights of the model checkpoint at bert-base-uncased were not used when initializing BertModel: ['cls.predictions.bias', 'cls.seq_relationship.weight', 'cls.predictions.transform.LayerNorm.bias', 'cls.predictions.transform.LayerNorm.weight', 'cls.predictions.transform.dense.weight', 'cls.predictions.decoder.weight', 'cls.seq_relationship.bias', 'cls.predictions.transform.dense.bias']
     - This IS expected if you are initializing BertModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
     - This IS NOT expected if you are initializing BertModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
     
@@ -881,58 +1205,242 @@ print(json.dumps(deep_context_clean, indent=2))
     [
       {
         "scene_id": 1,
-        "text": "Hare was hopping through the forest .",
+        "text": "Once , a hare laughed at a tortoise for being slow .",
         "entities": [
           {
-            "entity_group": "Person",
-            "word": "Hare",
-            "score": 0.986299991607666,
-            "source": "NER"
+            "entity_group": "Character",
+            "word": "hare",
+            "score": 1.0,
+            "source": "Rule"
           },
           {
             "entity_group": "Location",
-            "word": "forest",
+            "word": "tortoise",
             "score": 1.0,
             "source": "Rule"
           }
         ],
-        "attributes": {},
+        "attributes": {
+          "laughed": [
+            "Once"
+          ],
+          "being": [
+            "slow"
+          ]
+        },
         "emotions": [
           {
-            "label": "neutral",
-            "score": 0.9677174091339111
+            "label": "amusement",
+            "score": 0.7049156427383423
           }
         ],
         "events": [
           {
             "event_method": "SRL-Generic",
             "event_type": "Generic",
-            "trigger": "was",
+            "trigger": "laughed",
             "arguments": {
-              "V": "was"
+              "ARGM-TMP": "Once",
+              "ARG0": "a hare",
+              "V": "laughed",
+              "ARG2": "at a tortoise",
+              "ARGM-CAU": "for being slow"
             }
           },
           {
             "event_method": "SRL-Generic",
             "event_type": "Generic",
-            "trigger": "hopping",
+            "trigger": "being",
             "arguments": {
-              "ARG0": "Hare",
-              "V": "hopping",
-              "ARGM-DIR": "through the forest"
+              "V": "being",
+              "ARG2": "slow"
             }
           }
         ]
       },
       {
         "scene_id": 2,
-        "text": "Hare saw a tortoise slowly walking along the path .",
+        "text": "Feeling insulted , a tortoise challenged a hare to a race .",
         "entities": [
           {
-            "entity_group": "Person",
-            "word": "Hare",
-            "score": 0.9977999925613403,
-            "source": "NER"
+            "entity_group": "Character",
+            "word": "tortoise",
+            "score": 1.0,
+            "source": "Rule"
+          },
+          {
+            "entity_group": "Character",
+            "word": "hare",
+            "score": 1.0,
+            "source": "Rule"
+          },
+          {
+            "entity_group": "Location",
+            "word": "race",
+            "score": 1.0,
+            "source": "Rule"
+          }
+        ],
+        "attributes": {
+          "Feeling": [
+            "insulted"
+          ]
+        },
+        "emotions": [
+          {
+            "label": "annoyance",
+            "score": 0.32556283473968506
+          }
+        ],
+        "events": [
+          {
+            "event_method": "SRL-Generic",
+            "event_type": "Generic",
+            "trigger": "Feeling",
+            "arguments": {
+              "V": "Feeling",
+              "ARG1": "insulted",
+              "ARG0": "a tortoise"
+            }
+          },
+          {
+            "event_method": "SRL-Generic",
+            "event_type": "Generic",
+            "trigger": "insulted",
+            "arguments": {
+              "V": "insulted",
+              "ARG1": "a tortoise"
+            }
+          },
+          {
+            "event_method": "SRL-Generic",
+            "event_type": "Generic",
+            "trigger": "challenged",
+            "arguments": {
+              "R-ARG0": "Feeling insulted",
+              "ARG0": "a tortoise",
+              "V": "challenged",
+              "ARG1": "a hare",
+              "ARG2": "to a race"
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": 3,
+        "text": "At the start , a hare ran quickly and left a tortoise far behind , but a hare soon grew overconfident and decided to rest .",
+        "entities": [
+          {
+            "entity_group": "Location",
+            "word": "start",
+            "score": 1.0,
+            "source": "Rule"
+          },
+          {
+            "entity_group": "Character",
+            "word": "hare",
+            "score": 1.0,
+            "source": "Rule"
+          },
+          {
+            "entity_group": "Character",
+            "word": "tortoise",
+            "score": 1.0,
+            "source": "Rule"
+          }
+        ],
+        "attributes": {
+          "ran": [
+            "quickly"
+          ],
+          "behind": [
+            "far"
+          ],
+          "left": [
+            "behind"
+          ],
+          "grew": [
+            "soon"
+          ],
+          "hare": [
+            "overconfident"
+          ],
+          "decided": [
+            "rest"
+          ]
+        },
+        "emotions": [
+          {
+            "label": "neutral",
+            "score": 0.7136326432228088
+          }
+        ],
+        "events": [
+          {
+            "event_method": "SRL-Generic",
+            "event_type": "Generic",
+            "trigger": "ran",
+            "arguments": {
+              "ARGM-TMP": "At the start",
+              "ARG0": "a hare",
+              "V": "ran",
+              "ARGM-MNR": "quickly"
+            }
+          },
+          {
+            "event_method": "SRL-Generic",
+            "event_type": "Generic",
+            "trigger": "left",
+            "arguments": {
+              "ARGM-TMP": "At the start",
+              "ARG0": "a hare",
+              "V": "left",
+              "ARG1": "a tortoise",
+              "ARGM-LOC": "far behind"
+            }
+          },
+          {
+            "event_method": "SRL-Generic",
+            "event_type": "Generic",
+            "trigger": "grew",
+            "arguments": {
+              "ARG1": "a hare",
+              "ARGM-TMP": "soon",
+              "V": "grew",
+              "ARG2": "overconfident"
+            }
+          },
+          {
+            "event_method": "SRL-Generic",
+            "event_type": "Generic",
+            "trigger": "decided",
+            "arguments": {
+              "ARG0": "a hare",
+              "ARGM-TMP": "soon",
+              "V": "decided",
+              "ARG1": "to rest"
+            }
+          },
+          {
+            "event_method": "SRL-Generic",
+            "event_type": "Generic",
+            "trigger": "rest",
+            "arguments": {
+              "ARG1": "a hare",
+              "V": "rest"
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": 4,
+        "text": "While a hare slept , a tortoise kept moving steadily and , in the end , crossed the finish line first , winning a race .",
+        "entities": [
+          {
+            "entity_group": "Character",
+            "word": "hare",
+            "score": 1.0,
+            "source": "Rule"
           },
           {
             "entity_group": "Character",
@@ -942,119 +1450,91 @@ print(json.dumps(deep_context_clean, indent=2))
           },
           {
             "entity_group": "Location",
-            "word": "path",
+            "word": "end",
             "score": 1.0,
             "source": "Rule"
-          }
-        ],
-        "attributes": {
-          "walking": [
-            "slowly"
-          ]
-        },
-        "emotions": [
-          {
-            "label": "neutral",
-            "score": 0.9678376317024231
-          }
-        ],
-        "events": [
-          {
-            "event_method": "SRL-Generic",
-            "event_type": "Generic",
-            "trigger": "saw",
-            "arguments": {
-              "ARG0": "Hare",
-              "V": "saw",
-              "ARG1": "a tortoise slowly walking along the path"
-            }
           },
           {
-            "event_method": "SRL-Generic",
-            "event_type": "Generic",
-            "trigger": "walking",
-            "arguments": {
-              "ARG0": "a tortoise",
-              "ARGM-MNR": "slowly",
-              "V": "walking",
-              "ARG1": "along the path"
-            }
-          }
-        ]
-      },
-      {
-        "scene_id": 3,
-        "text": "Hare greeted a tortoise fast .",
-        "entities": [
-          {
-            "entity_group": "Person",
-            "word": "Hare",
-            "score": 0.9909999966621399,
-            "source": "NER"
-          },
-          {
-            "entity_group": "Character",
-            "word": "tortoise",
+            "entity_group": "Object",
+            "word": "finish line",
             "score": 1.0,
             "source": "Rule"
-          }
-        ],
-        "attributes": {
-          "greeted": [
-            "fast"
-          ]
-        },
-        "emotions": [
+          },
           {
-            "label": "neutral",
-            "score": 0.9602752327919006
-          }
-        ],
-        "events": [
-          {
-            "event_method": "SRL-Generic",
-            "event_type": "Generic",
-            "trigger": "greeted",
-            "arguments": {
-              "ARG0": "Hare",
-              "V": "greeted",
-              "ARG1": "a tortoise",
-              "ARGM-MNR": "fast"
-            }
-          }
-        ]
-      },
-      {
-        "scene_id": 4,
-        "text": "a tortoise is handsome .",
-        "entities": [
-          {
-            "entity_group": "Character",
-            "word": "tortoise",
+            "entity_group": "Object",
+            "word": "race",
             "score": 1.0,
             "source": "Rule"
           }
         ],
         "attributes": {
           "tortoise": [
-            "handsome"
+            "moving"
+          ],
+          "moving": [
+            "steadily"
+          ],
+          "crossed": [
+            "first"
           ]
         },
         "emotions": [
           {
-            "label": "admiration",
-            "score": 0.9384015798568726
+            "label": "neutral",
+            "score": 0.7321919798851013
           }
         ],
         "events": [
           {
             "event_method": "SRL-Generic",
             "event_type": "Generic",
-            "trigger": "is",
+            "trigger": "slept",
+            "arguments": {
+              "ARG0": "a hare",
+              "V": "slept"
+            }
+          },
+          {
+            "event_method": "SRL-Generic",
+            "event_type": "Generic",
+            "trigger": "kept",
+            "arguments": {
+              "ARGM-TMP": "While a hare slept",
+              "ARG0": "a tortoise",
+              "V": "kept",
+              "ARG1": "moving steadily"
+            }
+          },
+          {
+            "event_method": "SRL-Generic",
+            "event_type": "Generic",
+            "trigger": "moving",
             "arguments": {
               "ARG1": "a tortoise",
-              "V": "is",
-              "ARG2": "handsome"
+              "V": "moving",
+              "ARGM-MNR": "steadily"
+            }
+          },
+          {
+            "event_method": "SRL-Generic",
+            "event_type": "Generic",
+            "trigger": "crossed",
+            "arguments": {
+              "ARGM-TMP": "first",
+              "ARG0": "a tortoise",
+              "V": "crossed",
+              "ARG1": "the finish line",
+              "ARGM-ADV": "winning a race"
+            }
+          },
+          {
+            "event_method": "SRL-Generic",
+            "event_type": "Generic",
+            "trigger": "winning",
+            "arguments": {
+              "ARG0": "a tortoise",
+              "V": "winning",
+              "ARG1": "a race"
             }
           }
         ]
