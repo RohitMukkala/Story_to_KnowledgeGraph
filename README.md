@@ -142,7 +142,7 @@ RETURN c.name, type(r), e.description;
 
 ## 👨‍💻 Contributors  
 
-- **Dr. Mohan Allum** – Advisor  
+- **Dr. Mohan Allam** – Advisor  
 - **Dasara Rajiv Kumar** – Co-Author  
 - **Rohit Mukkala** – Co-Author  
 - **Sujal Ghonmode** – Co-Author  
