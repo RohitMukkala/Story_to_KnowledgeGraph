@@ -1,0 +1,34 @@
+# Core NLP
+spacy==3.3.1
+spacy-transformers==1.1.7
+
+# Hugging Face (compatible with AllenNLP 2.10.1)
+transformers==4.20.1
+datasets==2.4.0
+tokenizers==0.12.1
+sentencepiece==0.1.96   # needed for T5, BART
+
+# AllenNLP (SRL baseline for publishing)
+allennlp==2.10.1
+allennlp-models==2.10.1
+
+# NER / Evaluation
+seqeval==1.2.2
+scikit-learn==1.1.2
+
+# Summarization helpers
+sumy==0.11.0
+rouge-score==0.1.2
+
+# Knowledge Graph (future-proof)
+neo4j==5.23.1   # official driver
+networkx==3.3   # in-memory graph utils
+
+# Visualization
+graphistry==0.20.0
+pyvis==0.3.2
+
+# General utilities
+numpy==1.23.5
+pandas==1.5.3
+matplotlib==3.7.2
